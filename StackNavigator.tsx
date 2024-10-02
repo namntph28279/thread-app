@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View } from 'react-native';
-import React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import React from 'react';
 import LoginScreen from './screens/LoginScreen';
 import RegisterScreen from './screens/RegisterScreen';
 
@@ -11,7 +10,7 @@ const StackNavigator = (): JSX.Element => {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name="Login" component={LoginScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="Login" component={LoginScreen} options={{ headerShown: false }} />
         <Stack.Screen name="Register" component={RegisterScreen} />
       </Stack.Navigator>
     </NavigationContainer>
@@ -20,4 +19,3 @@ const StackNavigator = (): JSX.Element => {
 
 export default StackNavigator;
 
-const styles = StyleSheet.create({});
