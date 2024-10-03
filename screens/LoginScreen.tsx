@@ -1,8 +1,10 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
-import React, { useState } from 'react';
-import { Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
+import { Alert, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { screenWidth } from '../utils';
 
@@ -11,13 +13,44 @@ const LoginScreen = () => {
   const [password, setPassword] = useState<string>('');
   const navigation = useNavigation<any>();
 
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const token = await AsyncStorage.getItem('authToken');
+
+        if (token) {
+          setTimeout(() => {
+            navigation.replace('Home');
+          }, 400);
+        }
+      } catch (error) {
+        console.error('error', error);
+      }
+    }
+
+    checkLogin();
+  }, [])
+
   const handleNavigation = () => {
     navigation.navigate('Register');
   };
 
   const handleLogin = () => {
-    console.log('login');
+    const user = {
+      email: email,
+      password: password
+    }
 
+    axios.post('http://192.168.21.107:3000/login', user).then((res) => {
+      console.log(res);
+      const token = res.data.token;
+
+      AsyncStorage.setItem('authToken', token);
+      navigation.navigate('Home');
+    }).catch((error) => {
+      Alert.alert('Login error');
+      console.error('error', error);
+    })
   }
 
   return (
@@ -47,6 +80,7 @@ const LoginScreen = () => {
         <View style={styles.containerInput}>
           <AntDesign style={styles.icon} name="lock" size={24} color="gray" />
           <TextInput
+            secureTextEntry={true}
             value={password}
             onChangeText={(text) => setPassword(text)}
             placeholder='enter your Password'
@@ -112,6 +146,8 @@ const styles = StyleSheet.create({
   input: {
     marginVertical: 12,
     color: 'gray',
+    flex: 1,
+    height: '100%'
   },
   icon: {
     marginLeft: 8
