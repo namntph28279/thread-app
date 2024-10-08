@@ -3,8 +3,8 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
 import React, { useState } from 'react';
-import { Alert, Image, KeyboardAvoidingView, Pressable, SafeAreaView, StyleSheet, Text, TextInput, View } from 'react-native';
-import { screenWidth } from '../utils';
+import { Alert, Image, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { screenWidth, URL } from '../utils';
 import axios from 'axios';
 
 const RegisterScreen = () => {
@@ -25,7 +25,7 @@ const RegisterScreen = () => {
     }
 
     axios
-      .post('http://192.168.21.107:3000/register', user)
+      .post(`${URL}/register`, user)
       .then((res) => {
         console.log(res);
         Alert.alert(
@@ -35,6 +35,8 @@ const RegisterScreen = () => {
         setName('');
         setEmail('');
         setPassword('');
+
+        handleNavigation();
       })
       .catch((err) => {
         Alert.alert(
@@ -90,13 +92,13 @@ const RegisterScreen = () => {
           />
         </View>
 
-        <Pressable style={styles.btnLogin} onPress={handleRegister}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.btnLogin} onPress={handleRegister}>
           <Text style={styles.textLogin}>Register</Text>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={styles.btnSignUp} onPress={handleNavigation}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.btnSignUp} onPress={handleNavigation}>
           <Text style={styles.textSignUp}>Already have an account? Sign In</Text>
-        </Pressable>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
 
     </SafeAreaView>

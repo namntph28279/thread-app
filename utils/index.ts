@@ -5,3 +5,4 @@ const { width, height } = Dimensions.get('window');
 
 export const screenWidth = width;
 export const screenHeight = height;
+export const URL = 'http://192.168.21.108:3000';

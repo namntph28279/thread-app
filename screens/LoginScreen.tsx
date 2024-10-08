@@ -4,9 +4,9 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Alert, Image, KeyboardAvoidingView, Pressable, StyleSheet, Text, TextInput, View } from 'react-native';
+import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { screenWidth } from '../utils';
+import { screenWidth, URL } from '../utils';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState<string>('');
@@ -41,12 +41,12 @@ const LoginScreen = () => {
       password: password
     }
 
-    axios.post('http://192.168.21.107:3000/login', user).then((res) => {
+    axios.post(`${URL}/login`, user).then((res) => {
       console.log(res);
       const token = res.data.token;
 
       AsyncStorage.setItem('authToken', token);
-      navigation.navigate('Home');
+      navigation.navigate('Main');
     }).catch((error) => {
       Alert.alert('Login error');
       console.error('error', error);
@@ -93,13 +93,13 @@ const LoginScreen = () => {
           <Text style={styles.textForgotPassword}>Forgot password</Text>
         </View>
 
-        <Pressable style={styles.btnLogin} onPress={handleLogin}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.btnLogin} onPress={handleLogin}>
           <Text style={styles.textLogin}>Login</Text>
-        </Pressable>
+        </TouchableOpacity>
 
-        <Pressable style={styles.btnSignUp} onPress={handleNavigation}>
+        <TouchableOpacity activeOpacity={0.7} style={styles.btnSignUp} onPress={handleNavigation}>
           <Text style={styles.textSignUp}>Don't have an account? Sign Up</Text>
-        </Pressable>
+        </TouchableOpacity>
       </KeyboardAvoidingView>
 
     </SafeAreaView>
