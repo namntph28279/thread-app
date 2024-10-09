@@ -270,3 +270,19 @@ app.get('/get-posts', async (req, res) => {
         res.status(500).json({ message: 'An error ocurred while getting the posts' });
     }
 })
+
+//endpoint get profile
+app.get('/profile/:userId', async (req, res) => {
+    try {
+        const userId = req.params.userId;
+        const user = await User.findById(userId);
+
+        if (!user) {
+            return res.status(400).json({ message: 'user not found' });
+        }
+
+        return res.status(200).json({ user });
+    } catch (error) {
+        res.status(500).json({ message: 'Error while getting the profile' });
+    }
+})

@@ -58,13 +58,27 @@ const HomeScreen = () => {
         try {
             const res = await axios.put(`${URL}/post/${postId}/${userId}/like`);
             const updatePost = res.data;
-            const updatePosts = posts?.map((post) => {
+            const updatePosts = posts?.map((post) =>
                 post?._id === updatePost._id ? updatePost : post
-            })
+            );
 
-            setPosts(updatePosts)
+            setPosts(updatePosts);
         } catch (error) {
-            console.log('error like the post ', error);
+            console.log('Error liking the post', error);
+        }
+    };
+
+    const handleUnlike = async (postId: string) => {
+        try {
+            const res = await axios.put(`${URL}/post/${postId}/${userId}/unlike`);
+            const updatePost = res.data;
+            const updatePosts = posts?.map((post) =>
+                post?._id === updatePost._id ? updatePost : post
+            );
+
+            setPosts(updatePosts);
+        } catch (error) {
+            console.log('Error unlike the post', error);
         }
     }
 
@@ -117,7 +131,7 @@ const HomeScreen = () => {
 
                                 <View style={{ flexDirection: 'row', gap: 10, marginTop: 8, alignItems: 'center' }}>
                                     {post?.likes?.includes(userId) ? (
-                                        <AntDesign onPress={() => handleLike(post?._id)} name="heart" size={18} color="black" />
+                                        <AntDesign onPress={() => handleUnlike(post?._id)} name="heart" size={18} color="red" />
                                     ) : (
                                         <AntDesign onPress={() => handleLike(post?._id)} name="hearto" size={18} color="black" />
                                     )}
