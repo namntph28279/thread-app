@@ -3,33 +3,17 @@ import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
-import React, { useEffect, useState } from 'react';
-import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import React, { useContext, useState } from 'react';
+import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
+import { UserType } from '../UserContext';
 import { screenWidth, URL } from '../utils';
 
 const LoginScreen = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const navigation = useNavigation<any>();
-
-  useEffect(() => {
-    const checkLogin = async () => {
-      try {
-        const token = await AsyncStorage.getItem('authToken');
-
-        if (token) {
-          setTimeout(() => {
-            navigation.replace('Main');
-          }, 400);
-        }
-      } catch (error) {
-        console.error('error', error);
-      }
-    }
-
-    checkLogin();
-  }, [])
+  const { setIsAuth } = useContext(UserType);
 
   const handleNavigation = () => {
     navigation.navigate('Register');
@@ -42,11 +26,10 @@ const LoginScreen = () => {
     }
 
     axios.post(`${URL}/login`, user).then((res) => {
-      console.log(res);
       const token = res.data.token;
 
       AsyncStorage.setItem('authToken', token);
-      navigation.navigate('Main');
+      setIsAuth(true);
     }).catch((error) => {
       Alert.alert('Login error');
       console.error('error', error);

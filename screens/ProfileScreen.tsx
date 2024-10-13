@@ -9,7 +9,7 @@ import { UserType } from '../UserContext';
 
 const ProfileScreen = () => {
     const navigation = useNavigation<any>();
-    const { userId, setUserId } = useContext(UserType);
+    const { userId, setIsAuth } = useContext(UserType);
     const [user, setUser] = useState<string>('');
 
     useEffect(() => {
@@ -31,7 +31,7 @@ const ProfileScreen = () => {
 
     const clearAuthToken = async () => {
         await AsyncStorage.removeItem('authToken');
-        navigation.replace('Login');
+        setIsAuth(null);
     }
     return (
         <SafeAreaView style={{ flex: 1 }}>

@@ -13,7 +13,8 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 const jwt = require("jsonwebtoken");
 
-const URL = 'http://192.168.21.108:3000';
+// const URL = 'http://192.168.21.108:3000';
+const URL = 'http://192.168.0.110:3000';
 
 //nên chọn server singapo
 

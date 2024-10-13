@@ -57,7 +57,8 @@ const User: React.FC<UserProps> = ({ item }) => {
             <View style={{
                 flexDirection: 'row',
                 alignItems: 'center',
-                gap: 10
+                gap: 10,
+                marginBottom: 15
             }}>
                 <Image style={{
                     height: 40,

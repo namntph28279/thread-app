@@ -1,5 +1,5 @@
 import { Button, Image, Keyboard, SafeAreaView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useState, useContext } from 'react'
 import { UserType } from '../UserContext';
 import axios from 'axios';
@@ -9,6 +9,21 @@ import { screenWidth } from './../utils/index';
 const ThreadScreen = () => {
     const [content, setContent] = useState<string>('');
     const { userId, setUserId } = useContext(UserType);
+    const [user, setUser] = useState<string>('');
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            try {
+                const res = await axios.get(`${URL}/profile/${userId}`);
+                const { user } = res.data;
+                setUser(user);
+            } catch (error) {
+                console.log('error get profile ', error);
+            }
+        }
+
+        fetchProfile();
+    }, []);
 
     const handlePostSubmit = () => {
         const postData: any = {
@@ -41,7 +56,7 @@ const ThreadScreen = () => {
                         source={{ uri: 'https://img.tripi.vn/cdn-cgi/image/width=700,height=700/https://gcs.tripi.vn/public-tripi/tripi-feed/img/474082Kvj/avt-de-thuong-cute_044342433.jpg' }}
                     />
 
-                    <Text>Nam đẹp trai</Text>
+                    <Text>{user?.name}</Text>
                 </View>
 
                 <View style={{
