@@ -1,39 +1,50 @@
 import AntDesign from '@expo/vector-icons/AntDesign';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { Alert, Image, KeyboardAvoidingView, SafeAreaView, StyleSheet, Text, TextInput, View, TouchableOpacity } from 'react-native';
+import { screenWidth, URL } from '../../../utils';
 import axios from 'axios';
-import React, { useContext, useState } from 'react';
-import { Alert, Image, KeyboardAvoidingView, StyleSheet, Text, TextInput, TouchableOpacity, View } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
-import { UserType } from '../UserContext';
-import { screenWidth, URL } from '../utils';
 
-const LoginScreen = () => {
+const RegisterScreen = () => {
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [name, setName] = useState<string>('');
   const navigation = useNavigation<any>();
-  const { setIsAuth } = useContext(UserType);
 
   const handleNavigation = () => {
-    navigation.navigate('Register');
+    navigation.navigate('Login');
   };
 
-  const handleLogin = () => {
+  const handleRegister = () => {
     const user = {
+      name: name,
       email: email,
       password: password
     }
 
-    axios.post(`${URL}/login`, user).then((res) => {
-      const token = res.data.token;
+    axios
+      .post(`${URL}/register`, user)
+      .then((res) => {
+        console.log(res);
+        Alert.alert(
+          'Registration successfully',
+          'you have been registered successfully'
+        );
+        setName('');
+        setEmail('');
+        setPassword('');
 
-      AsyncStorage.setItem('authToken', token);
-      setIsAuth(true);
-    }).catch((error) => {
-      Alert.alert('Login error');
-      console.error('error', error);
-    })
+        handleNavigation();
+      })
+      .catch((err) => {
+        Alert.alert(
+          'Registration failed',
+          'An error occurred during registration'
+        )
+        console.error('error', err)
+      })
   }
 
   return (
@@ -47,7 +58,17 @@ const LoginScreen = () => {
 
       <KeyboardAvoidingView>
         <View style={styles.containerTitle}>
-          <Text style={styles.title}>Login To Your Account</Text>
+          <Text style={styles.title}>Register To Your Account</Text>
+        </View>
+
+        <View style={styles.containerInput}>
+          <Ionicons style={styles.icon} name="person" size={24} color="gray" />
+          <TextInput
+            value={name}
+            onChangeText={(text) => setName(text)}
+            placeholder='Enter your name'
+            style={[styles.input, { fontSize: password ? 16 : 16 }]}
+          />
         </View>
 
         <View style={styles.containerInput}>
@@ -55,7 +76,7 @@ const LoginScreen = () => {
           <TextInput
             value={email}
             onChangeText={(text) => setEmail(text)}
-            placeholder='enter your Email'
+            placeholder='Enter your Email'
             style={[styles.input, { fontSize: email ? 16 : 16 }]}
           />
         </View>
@@ -66,22 +87,17 @@ const LoginScreen = () => {
             secureTextEntry={true}
             value={password}
             onChangeText={(text) => setPassword(text)}
-            placeholder='enter your Password'
+            placeholder='Enter your Password'
             style={[styles.input, { fontSize: password ? 16 : 16 }]}
           />
         </View>
 
-        <View style={styles.containerFooter}>
-          <Text>Keep me logged in</Text>
-          <Text style={styles.textForgotPassword}>Forgot password</Text>
-        </View>
-
-        <TouchableOpacity activeOpacity={0.7} style={styles.btnLogin} onPress={handleLogin}>
-          <Text style={styles.textLogin}>Login</Text>
+        <TouchableOpacity activeOpacity={0.7} style={styles.btnLogin} onPress={handleRegister}>
+          <Text style={styles.textLogin}>Register</Text>
         </TouchableOpacity>
 
         <TouchableOpacity activeOpacity={0.7} style={styles.btnSignUp} onPress={handleNavigation}>
-          <Text style={styles.textSignUp}>Don't have an account? Sign Up</Text>
+          <Text style={styles.textSignUp}>Already have an account? Sign In</Text>
         </TouchableOpacity>
       </KeyboardAvoidingView>
 
@@ -89,7 +105,7 @@ const LoginScreen = () => {
   )
 }
 
-export default LoginScreen;
+export default RegisterScreen
 
 const styles = StyleSheet.create({
   container: {

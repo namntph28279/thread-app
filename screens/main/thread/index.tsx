@@ -1,10 +1,10 @@
 import { Button, Image, Keyboard, SafeAreaView, StyleSheet, Text, TextInput, TouchableWithoutFeedback, View } from 'react-native'
 import React, { useEffect } from 'react'
 import { useState, useContext } from 'react'
-import { UserType } from '../UserContext';
+import { UserType } from '../../../UserContext';
 import axios from 'axios';
-import { URL } from '../utils';
-import { screenWidth } from './../utils/index';
+import { URL } from '../../../utils';
+import { screenWidth } from '../../../utils/index';
 
 const ThreadScreen = () => {
     const [content, setContent] = useState<string>('');

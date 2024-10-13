@@ -4,8 +4,8 @@ import AsyncStorage from '@react-native-async-storage/async-storage'
 import { useNavigation } from '@react-navigation/native';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { URL } from '../utils';
-import { UserType } from '../UserContext';
+import { URL } from '../../../utils';
+import { UserType } from '../../../UserContext';
 
 const ProfileScreen = () => {
     const navigation = useNavigation<any>();

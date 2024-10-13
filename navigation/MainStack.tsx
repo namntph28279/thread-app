@@ -1,15 +1,12 @@
-import React from 'react';
+import AntDesign from '@expo/vector-icons/AntDesign';
+import Entypo from '@expo/vector-icons/Entypo';
+import Ionicons from '@expo/vector-icons/Ionicons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-
-import Entypo from '@expo/vector-icons/Entypo';
-import AntDesign from '@expo/vector-icons/AntDesign';
-import Ionicons from '@expo/vector-icons/Ionicons';
-
-import HomeScreen from '../screens/HomeScreen';
-import ThreadScreen from '../screens/ThreadScreen';
-import ActivityScreen from '../screens/ActivityScreen';
-import ProfileScreen from './../screens/ProfileScreen';
+import React from 'react';
+import {
+  ActivityScreen, HomeScreen, ProfileScreen, ThreadScreen
+} from '../screens';
 
 const Tab = createBottomTabNavigator();
 function MainTabs() {

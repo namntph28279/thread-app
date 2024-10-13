@@ -2,20 +2,26 @@
   "extends": "expo/tsconfig.base",
   "compilerOptions": {
     "strict": true,
-    "target": "es6", // Thiết lập target ES6 để hỗ trợ nhiều tính năng hiện đại
+    "target": "es6",
     "module": "esnext",
-    "jsx": "react", // Hỗ trợ JSX cho các dự án React
-    "esModuleInterop": true, // Cho phép import ES6 module vào môi trường CommonJS
+    "jsx": "react",
+    "esModuleInterop": true,
     "allowSyntheticDefaultImports": true,
-    "skipLibCheck": true, // Bỏ qua việc kiểm tra các file .d.ts để tăng tốc độ gợi ý
-    "forceConsistentCasingInFileNames": true, // Đảm bảo các file có cách viết hoa giống nhau
-    "noEmit": true, // Không xuất file, chỉ dùng để kiểm tra type và gợi ý code
-    "resolveJsonModule": true, // Cho phép import file JSON
-    "baseUrl": ".", // Đặt base URL cho các import trong dự án
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "noEmit": true,
+    "resolveJsonModule": true,
+    "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"] // Alias để gợi ý cho các import từ thư mục src
+      "@/*": [
+        "src/*"
+      ]
     }
   },
-  "include": ["src/**/*"], // Bao gồm tất cả các file TypeScript trong thư mục src
-  "exclude": ["node_modules"] // Loại trừ node_modules khỏi việc kiểm tra
+  "include": [
+    "src/**/*"
+  ],
+  "exclude": [
+    "node_modules"
+  ]
 }

@@ -1,12 +1,12 @@
 import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import React, { useEffect, useState, useContext } from 'react'
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { UserType } from '../UserContext';
+import { UserType } from '../../../UserContext';
 import axios from 'axios';
 import { jwtDecode } from 'jwt-decode';
-import { URL } from './../utils/index';
-import User from '../components/User';
-import { MyJwtPayload, UserData } from './type';
+import { URL } from '../../../utils/index';
+import User from '../../../components/User';
+import { MyJwtPayload, UserData } from '../../type';
 
 const ActivityScreen = () => {
     const [selectedButton, setSelectedButton] = useState<string>('people');
@@ -132,7 +132,7 @@ const ActivityScreen = () => {
     )
 }
 
-export default ActivityScreen
+export default ActivityScreen;
 
 const styles = StyleSheet.create({
     container: {

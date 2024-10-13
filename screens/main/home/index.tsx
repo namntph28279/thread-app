@@ -1,16 +1,15 @@
-import { StyleSheet, Text, SafeAreaView, ScrollView, View, Image } from 'react-native'
-import React, { useContext, useEffect } from 'react'
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { jwtDecode } from 'jwt-decode';
-import { MyJwtPayload } from './type';
-import { UserType } from '../UserContext';
-import { useState } from 'react';
-import { URL } from './../utils/index';
-import axios from 'axios';
 import AntDesign from '@expo/vector-icons/AntDesign';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback } from 'react';
+import axios from 'axios';
+import { jwtDecode } from 'jwt-decode';
+import React, { useCallback, useContext, useEffect, useState } from 'react';
+import { Image, SafeAreaView, ScrollView, Text, View } from 'react-native';
+import { UserType } from '../../../UserContext';
+import { URL } from '../../../utils/index';
+import { MyJwtPayload } from '../../type';
+import { styles } from './styles';
 
 const HomeScreen = () => {
     const { userId, setUserId } = useContext(UserType);
@@ -154,4 +153,3 @@ const HomeScreen = () => {
 
 export default HomeScreen
 
-const styles = StyleSheet.create({})
